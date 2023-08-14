@@ -29,7 +29,7 @@ class NewsActivity : AppCompatActivity() {
 
 
 
-  /*      if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+       if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darkTheme)
         } else {
             setTheme(R.style.AppTheme)
@@ -47,7 +47,7 @@ class NewsActivity : AppCompatActivity() {
             }
 
 
-        }*/
+        }
     }
 
 
@@ -63,7 +63,7 @@ class NewsActivity : AppCompatActivity() {
 */
 
         // Night mode following system settings
-       delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+      // delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         print("")
