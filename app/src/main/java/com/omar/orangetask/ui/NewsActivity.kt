@@ -27,10 +27,10 @@ class NewsActivity : AppCompatActivity() {
         flagLang=isLang()!!
         if(flagLang=="en")
         {
-            setLocale(this, "en")
+            setLocale(this, "en",false)
         }
         else{
-            setLocale(this, "ar")
+            setLocale(this, "ar",false)
         }
 
         setContentView(R.layout.activity_news)
@@ -61,12 +61,14 @@ class NewsActivity : AppCompatActivity() {
         //For language button(Floating)
         floatinglang.setOnClickListener {
             if (flagLang=="en"){
-                setLocale(this, "ar")
                 saveFlagLangState("ar")
+                setLocale(this, "ar")
+
             }
             else{
-                setLocale(this, "en")
                 saveFlagLangState("en")
+                setLocale(this, "en")
+
             }
 
         }
@@ -169,7 +171,7 @@ class NewsActivity : AppCompatActivity() {
 
 
 
-    fun setLocale(activity: Activity, languageCode: String) {
+    fun setLocale(activity: Activity, languageCode: String,check:Boolean=true) {
 
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
@@ -178,9 +180,15 @@ class NewsActivity : AppCompatActivity() {
         activity.resources.updateConfiguration(
             config, activity.resources.displayMetrics
         )
-          activity.recreate() // Recreate the activity to apply changes
-        //restartApp(activity)
 
+       if(check){
+
+            finish()
+            activity.startActivity(intent)
+
+
+
+       }
 
     }
 
