@@ -4,4 +4,6 @@
     <string name="saved">Favourite</string>
     <string name="search">Search</string>
     <string name="api_county_code">us</string>
+    <string name="searchbar">Search...</string>
+
 </resources>

@@ -5,5 +5,6 @@
     <string name="saved">المفضلة</string>
     <string name="search">البحث</string>
     <string name="api_county_code">eg</string>
+    <string name="searchbar">ابحث...</string>
 
 </resources>

@@ -9,7 +9,7 @@
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search..."
+        android:queryHint="@string/searchbar"
         android:background="@drawable/searchstyle"
         android:queryBackground="@android:color/transparent"
         android:layout_marginBottom="10dp"

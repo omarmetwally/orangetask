@@ -24,18 +24,24 @@ class NewsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_news)
+
         flagLang=isLang()!!
         if(flagLang=="en")
         {
             setLocale(this, "en",false)
+            floatinglang.setImageResource(R.drawable.toarabic)
+
         }
         else{
             setLocale(this, "ar",false)
+            floatinglang.setImageResource(R.drawable.toenglish)
+
         }
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news)
-
         val newsRepository = NewsRepository(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
@@ -62,11 +68,13 @@ class NewsActivity : AppCompatActivity() {
         //For language button(Floating)
         floatinglang.setOnClickListener {
             if (flagLang=="en"){
+                floatinglang.setImageResource(R.drawable.toarabic)
                 saveFlagLangState("ar")
                 setLocale(this, "ar")
 
             }
             else{
+                floatinglang.setImageResource(R.drawable.toarabic)
                 saveFlagLangState("en")
                 setLocale(this, "en")
 
