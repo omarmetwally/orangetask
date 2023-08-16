@@ -68,7 +68,9 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         })
 
         btnRetry.setOnClickListener {
-            viewModel.getBreakingNews("us")
+
+
+            viewModel.getBreakingNews(getString(R.string.api_county_code))
         }
     }
 
@@ -115,7 +117,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             val shouldPaginate = isNoErrors && isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
             if(shouldPaginate) {
-                viewModel.getBreakingNews("us")
+                viewModel.getBreakingNews(getString(R.string.api_county_code))
                 isScrolling = false
             }
         }

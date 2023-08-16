@@ -1,15 +1,20 @@
 package com.omar.orangetask.ui
 
 import android.app.Application
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
+import android.provider.Settings.System.getString
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.snackbar.Snackbar
 import com.omar.orangetask.NewsApplication
+import com.omar.orangetask.R
 import com.omar.orangetask.models.Article
 import com.omar.orangetask.models.NewsResponse
 import com.omar.orangetask.repository.NewsRepository
@@ -35,11 +40,17 @@ class NewsViewModel(
 
 
     init {
-        getBreakingNews("us")
+        val countryCode =getApplication<Application>().getString(R.string.api_county_code)
+        Log.d("BreakingNews", "Country CodeUpdated: $countryCode")
+
+        getBreakingNews(countryCode)
     }
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
+
         safeBreakingNewsCall(countryCode)
+
+
     }
 
     fun searchNews(searchQuery: String) = viewModelScope.launch {

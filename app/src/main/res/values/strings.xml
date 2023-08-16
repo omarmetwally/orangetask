@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Orange Task</string>
+    <string name="homefreg">News</string>
+    <string name="saved">Favourite</string>
+    <string name="search">Search</string>
+    <string name="api_county_code">us</string>
 </resources>
