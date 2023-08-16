@@ -29,7 +29,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         viewModel = (activity as NewsActivity).viewModel
         val article = args.article
         val parsedDate = LocalDateTime.parse(article.publishedAt, DateTimeFormatter.ISO_DATE_TIME)
-        val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("MMM dd,yyyy  H:mm a"))
+        val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("MMM dd,yyyy  h:mm a"))
         textAuthor.setText(article.author)
         textTitle.setText(article.title)
         textDate.setText(formattedDate.format(parsedDate))
