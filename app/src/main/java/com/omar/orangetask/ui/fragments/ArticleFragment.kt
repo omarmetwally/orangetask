@@ -43,7 +43,8 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
 
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
-        startActivity(browserIntent)
+            browserIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(browserIntent)
         }
 
         fabsave.setOnClickListener {
