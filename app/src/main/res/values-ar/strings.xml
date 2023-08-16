@@ -6,5 +6,8 @@
     <string name="search">البحث</string>
     <string name="api_county_code">eg</string>
     <string name="searchbar">ابحث...</string>
+    <string name="noInternet">لا يوجد شبكة اتصال</string>
+    <string name="connectionError">مشكلة فى الشبكة</string>
+    <string name="rerty">حاول مرةاخرى</string>
 
 </resources>

@@ -5,5 +5,8 @@
     <string name="search">Search</string>
     <string name="api_county_code">us</string>
     <string name="searchbar">Search...</string>
+    <string name="noInternet">No Internet</string>
+    <string name="connectionError">Connection Error</string>
+    <string name="rerty">Retry</string>
 
 </resources>

@@ -41,8 +41,6 @@ class NewsViewModel(
 
     init {
         val countryCode =getApplication<Application>().getString(R.string.api_county_code)
-        Log.d("BreakingNews", "Country CodeUpdated: $countryCode")
-
         getBreakingNews(countryCode)
     }
 
@@ -114,11 +112,11 @@ class NewsViewModel(
                 val response = newsRepository.searchNews(searchQuery, searchNewsPage)
                 searchNews.postValue(handleSearchNewsResponse(response))
             } else {
-                searchNews.postValue(Resource.Error("No internet connection"))
+                searchNews.postValue(Resource.Error(getApplication<Application>().getString(R.string.noInternet)))
             }
         } catch(t: Throwable) {
             when(t) {
-                is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
+                is IOException -> searchNews.postValue(Resource.Error(getApplication<Application>().getString(R.string.connectionError)))
                 else -> searchNews.postValue(Resource.Error("Conversion Error"))
             }
         }
@@ -131,11 +129,11 @@ class NewsViewModel(
                 val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
                 breakingNews.postValue(handleBreakingNewsResponse(response))
             } else {
-                breakingNews.postValue(Resource.Error("No internet connection"))
+                breakingNews.postValue(Resource.Error(getApplication<Application>().getString(R.string.noInternet)))
             }
         } catch(t: Throwable) {
             when(t) {
-                is IOException -> breakingNews.postValue(Resource.Error("Network Failure"))
+                is IOException -> breakingNews.postValue(Resource.Error(getApplication<Application>().getString(R.string.connectionError)))
                 else -> breakingNews.postValue(Resource.Error("Conversion Error"))
             }
         }

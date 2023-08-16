@@ -39,16 +39,17 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
             imageView.setImageResource(R.drawable.noimage)
         }
         textDesc.setText(article.description)
-//        webView.apply {
-//            webViewClient = WebViewClient()
-//            article.url?.let { loadUrl(it) }
-//        }
+        floatingWebBrowser.setOnClickListener {
+
+
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
+        startActivity(browserIntent)
+        }
 
         fabsave.setOnClickListener {
-           //viewModel.saveArticle(article)
-            Snackbar.make(view, article.description+"", Snackbar.LENGTH_SHORT).show()
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
-            startActivity(browserIntent)
+            viewModel.saveArticle(article)
+            Snackbar.make(view, "Artical saved Successful", Snackbar.LENGTH_SHORT).show()
+
 
         }
 

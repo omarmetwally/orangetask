@@ -17,16 +17,16 @@
             android:layout_margin="16dp"
             android:layout_weight="2"
             android:gravity="center_horizontal"
-            android:text="Failed to connect"
+            android:text="@string/noInternet"
             android:textAlignment="center" />
 
         <Button
             android:id="@+id/btnRetry"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_weight="1"
-            android:text="Retry" />
+            android:text="@string/rerty" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
