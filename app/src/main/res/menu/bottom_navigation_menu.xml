@@ -3,11 +3,11 @@
 
     <item android:id="@+id/breakingNewsFragment"
         android:title="@string/homefreg"
-        android:icon="@drawable/ic_breaking_news" />
+        android:icon="@drawable/ic_newspaper" />
 
     <item android:id="@+id/savedNewsFragment"
         android:title="@string/saved"
-        android:icon="@drawable/ic_favorite" />
+        android:icon="@drawable/ic_bookmark" />
 
     <item android:id="@+id/searchNewsFragment"
         android:title="@string/search"
