@@ -3,6 +3,7 @@ package com.omar.orangetask.ui.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -47,17 +48,44 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         }
 
         var job: Job? = null
-        etSearch.addTextChangedListener { editable ->
-            job?.cancel()
-            job = MainScope().launch {
-                delay(SEARCH_NEWS_TIME_DELAY)
-                editable?.let {
-                    if(editable.toString().isNotEmpty()) {
-                        viewModel.searchNews(editable.toString())
+
+
+        etSearch.setOnClickListener(View.OnClickListener {
+            etSearch.setIconified(false);
+        })
+        etSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Handle submission if needed. This is triggered when the user presses the search button on the keyboard.
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                job?.cancel()
+                job = MainScope().launch {
+                    delay(SEARCH_NEWS_TIME_DELAY)
+                    newText?.let {
+                        if (it.isNotEmpty()) {
+                            viewModel.searchNews(it)
+                        }
                     }
                 }
+                return true
             }
-        }
+        })
+
+
+
+//        etSearch.addTextChangedListener { editable ->
+//            job?.cancel()
+//            job = MainScope().launch {
+//                delay(SEARCH_NEWS_TIME_DELAY)
+//                editable?.let {
+//                    if(editable.toString().isNotEmpty()) {
+//                        viewModel.searchNews(editable.toString())
+//                    }
+//                }
+//            }
+//        }
 
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
@@ -87,8 +115,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         })
 
         btnRetry.setOnClickListener {
-            if (etSearch.text.toString().isNotEmpty()) {
-                viewModel.searchNews(etSearch.text.toString())
+            if (etSearch.query.toString().isNotEmpty()) {
+                viewModel.searchNews(etSearch.query.toString())
             } else {
                 hideErrorMessage()
             }
@@ -138,7 +166,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             val shouldPaginate = isNoErrors && isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
             if(shouldPaginate) {
-                viewModel.searchNews(etSearch.text.toString())
+                viewModel.searchNews(etSearch.query.toString())
                 isScrolling = false
             }
         }
