@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Orange Task</string>
+    <string name="app_name">News App</string>
     <string name="homefreg">News</string>
     <string name="saved">Favourite</string>
     <string name="search">Search</string>

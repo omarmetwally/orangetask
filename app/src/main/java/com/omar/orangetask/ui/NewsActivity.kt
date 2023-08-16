@@ -4,19 +4,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.omar.orangetask.R
 import com.omar.orangetask.db.ArticleDatabase
 import com.omar.orangetask.repository.NewsRepository
 import kotlinx.android.synthetic.main.activity_news.*
-import kotlinx.android.synthetic.main.fragment_article.fab
 import java.util.Locale
 
 class NewsActivity : AppCompatActivity() {
@@ -46,36 +43,36 @@ class NewsActivity : AppCompatActivity() {
 
         flag = isLightMode()
         if (flag) {
-            switchtheme.setImageResource(R.drawable.thumbtrue)
+            floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
 
         } else {
-            switchtheme.setImageResource(R.drawable.thumbfalse)
+            floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
         }
 
 
 
 
-        switchtheme.setOnClickListener {
+        floatingthemeswitch.setOnClickListener {
             setLocale(this, "ar")
 
-              recreate()
 
 
 
 
-            /* if (flag) {
-                 switchtheme.setImageResource(R.drawable.thumbfalse)
+
+             if (flag) {
+                 floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
                  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                  setTheme(R.style.darkTheme)
                  flag = false
                  saveFlagState(false)
              } else {
-                 switchtheme.setImageResource(R.drawable.thumbtrue)
+                 floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
                  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                  setTheme(R.style.AppTheme)
                  flag = true
                  saveFlagState(true)
-             }*/
+             }
 
         }
 
@@ -154,7 +151,17 @@ class NewsActivity : AppCompatActivity() {
         editor.putString("app_language", languageCode)
         editor.apply()
 
-        activity.recreate() // Recreate the activity to apply changes
+
+       // activity.recreate() // Recreate the activity to apply changes
+     // restartApp(activity)
+    }
+    fun restartApp(context: Context) {
+        val intent = context.packageManager
+            .getLaunchIntentForPackage(context.packageName)
+        val componentName = intent!!.component
+        val mainIntent = Intent.makeRestartActivityTask(componentName)
+        context.startActivity(mainIntent)
+        System.exit(0)  // This is used to kill the current instance of the app
     }
 
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">تجربه</string>
-    <string name="homefreg">أخبار</string>
+    <string name="app_name">الأخبار</string>
+    <string name="homefreg">جميع الأخبار</string>
     <string name="saved">المفضلة</string>
-    <string name="search">بحث</string>
+    <string name="search">البحث</string>
     <string name="api_county_code">eg</string>
 
 </resources>
