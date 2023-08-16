@@ -59,7 +59,11 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         val parsedDate = LocalDateTime.parse(article.publishedAt, DateTimeFormatter.ISO_DATE_TIME)
         val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("MMM dd,yyyy  H:mm a"))
         holder.itemView.apply {
-            Glide.with(this).load(article.urlToImage).into(ivArticleImage)
+            article.urlToImage?.let {
+                Glide.with(this).load(it).into(ivArticleImage)
+            } ?: run {
+                ivArticleImage.setImageResource(R.drawable.noimage)
+            }
             tvSource.text = article.source?.name
             tvTitle.text = article.title
             //tvDescription.text = article.description

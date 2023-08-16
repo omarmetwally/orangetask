@@ -14,6 +14,7 @@ import com.omar.orangetask.ui.NewsViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_article.*
+import kotlinx.android.synthetic.main.item_article_preview.view.ivArticleImage
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -32,7 +33,11 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         textAuthor.setText(article.author)
         textTitle.setText(article.title)
         textDate.setText(formattedDate.format(parsedDate))
-        Glide.with(this).load(article.urlToImage).into(imageView)
+        article.urlToImage?.let {
+            Glide.with(this).load(it).into(imageView)
+        } ?: run {
+            imageView.setImageResource(R.drawable.noimage)
+        }
         textDesc.setText(article.description)
 //        webView.apply {
 //            webViewClient = WebViewClient()
