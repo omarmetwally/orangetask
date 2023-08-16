@@ -23,7 +23,7 @@ class NewsActivity : AppCompatActivity() {
      var  flagLang="en"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
         flagLang=isLang()!!
         if(flagLang=="en")
         {
@@ -33,6 +33,7 @@ class NewsActivity : AppCompatActivity() {
             setLocale(this, "ar",false)
         }
 
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
         val newsRepository = NewsRepository(ArticleDatabase(this))

@@ -30,6 +30,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         val parsedDate = LocalDateTime.parse(article.publishedAt, DateTimeFormatter.ISO_DATE_TIME)
         val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("MMM dd,yyyy  H:mm a"))
         textAuthor.setText(article.author)
+        textTitle.setText(article.title)
         textDate.setText(formattedDate.format(parsedDate))
         Glide.with(this).load(article.urlToImage).into(imageView)
         textDesc.setText(article.description)
@@ -38,7 +39,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 //            article.url?.let { loadUrl(it) }
 //        }
 
-        fab.setOnClickListener {
+        fabsave.setOnClickListener {
            //viewModel.saveArticle(article)
             Snackbar.make(view, article.description+"", Snackbar.LENGTH_SHORT).show()
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))

@@ -1,65 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:src="@drawable/ic_favorite"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="22dp"
-        app:layout_constraintBottom_toTopOf="@+id/textDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="197dp"
 
-    <TextView
-        android:id="@+id/textDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="235dp"
-        android:layout_marginEnd="31dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            app:srcCompat="@drawable/noimage" />
 
-    <TextView
-        android:id="@+id/textDesc"
-        android:layout_width="307dp"
-        android:layout_height="211dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="60dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAuthor" />
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:text="Title"
+            android:textColor="?attr/text_color"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="25dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+              android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold"
+                android:text="Author" />
+            <TextView
+                android:id="@+id/textDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Date" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+
+            android:paddingBottom="10dp"
+            android:text="Description"
+            android:textStyle="italic"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:elevation="11dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/floatingActionButton"
+                android:layout_width="76dp"
+                android:layout_height="46dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@android:color/white"
+                android:elevation="11dp"
+                android:clickable="true"
+                app:srcCompat="@drawable/baseline_language_24"
+               />
+
+            <ImageView
+                android:id="@+id/fabsave"
+                android:layout_width="76dp"
+                android:layout_height="46dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:elevation="11dp"
+                android:src="@drawable/baseline_bookmark_add_24"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
 
 
