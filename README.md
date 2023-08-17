@@ -12,7 +12,7 @@
 
 
 
-## `Simple Run:` for some features 
+## `Simple Run:` for some features   
 
 ## `Dark Mode` follow system mode & user choice by button
 
@@ -30,7 +30,9 @@ https://github.com/omarmetwally/orangetask/assets/20462286/1482b08d-d429-4cef-ba
 https://github.com/omarmetwally/orangetask/assets/20462286/da1f52ef-d9b0-4017-b819-b68cbc711745
 ## `No intenert & View saved data - Delte saved` 
 https://github.com/omarmetwally/orangetask/assets/20462286/579d1548-cdef-4410-b4df-2d09dcea0f29
+
 ## `Arabic Localization Two ways (by user Choice (Button) or phone system in Arabic ) `
+"No Image Available beacuse the API return null in image URL"
 ## In Arabic mode the url Country is eg 
 https://github.com/omarmetwally/orangetask/assets/20462286/7821f5fd-847f-4d3f-b025-e3c306d34c24
 ## `Arabic search & navigate to browser` 
