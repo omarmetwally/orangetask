@@ -1,5 +1,6 @@
 package com.omar.orangetask.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -23,6 +24,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
     lateinit var viewModel: NewsViewModel
     val args: ArticleFragmentArgs by navArgs()
 
+    @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -27,9 +27,9 @@ class NewsActivity : AppCompatActivity() {
 
 
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_news)
 
+        //to get last User Settings for Language
         flagLang=isLang()!!
         if(flagLang=="en")
         {
@@ -42,6 +42,7 @@ class NewsActivity : AppCompatActivity() {
             floatinglang.setImageResource(R.drawable.toenglish)
 
         }
+
         val newsRepository = NewsRepository(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
@@ -50,19 +51,35 @@ class NewsActivity : AppCompatActivity() {
 
 
 
-
-        flagMode = isLightMode()
-        if (flagMode) {
-            floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            setTheme(R.style.AppTheme)
-
-        } else {
-            floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            setTheme(R.style.darkTheme)
+        //to get last User Settings for Dark Mode
+        when (getThemeChoice()) {
+            "SYSTEM" ->{
+                // Check current system mode to decide which mode to set
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                    saveThemeChoice("LIGHT")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
+                    setTheme(R.style.AppTheme)
+                } else {
+                    saveThemeChoice("DARK")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
+                    setTheme(R.style.darkTheme)
+                }
+            }
+            "LIGHT" -> {
+                saveThemeChoice("SYSTEM")
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
+                setTheme(R.style.AppTheme)
+            }
+            "DARK" -> {
+                saveThemeChoice("SYSTEM")
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
+                setTheme(R.style.darkTheme)
+            }
         }
-
 
 
         //For language button(Floating)
@@ -82,84 +99,60 @@ class NewsActivity : AppCompatActivity() {
 
         }
 
-        //For Dark&Light mode button(Floating)
+        //For Dark&Light mode (Floating & System Setting)
         floatingthemeswitch.setOnClickListener {
-
-            if (flagMode) {
-                floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                setTheme(R.style.darkTheme)
-                flagMode = false
-                saveFlagState(false)
-            } else {
-                floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                setTheme(R.style.AppTheme)
-                flagMode = true
-                saveFlagState(true)
+            when (getThemeChoice()) {
+                "SYSTEM" -> {
+                    // Check current system mode to decide which mode to set
+                    if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                        saveThemeChoice("LIGHT")
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
+                        setTheme(R.style.AppTheme)
+                    } else {
+                        saveThemeChoice("DARK")
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
+                        setTheme(R.style.darkTheme)
+                    }
+                }
+                "LIGHT" -> {
+                    saveThemeChoice("SYSTEM")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
+                    setTheme(R.style.AppTheme)
+                }
+                "DARK" -> {
+                    saveThemeChoice("SYSTEM")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
+                    setTheme(R.style.darkTheme)
+                }
             }
-
         }
 
-        /*   switchtheme.setOnCheckedChangeListener { _, isChecked ->
-               if (isChecked) {
-                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                   setTheme(R.style.darkTheme)
-
-               } else {
-                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                   setTheme(R.style.AppTheme)
-               }
 
 
-           }*/
+
 
 
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        /*
-                //  force enabling night mode
-               // delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
-
-                // force disabling night mode
-                // delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
-
-        */
-
-        // Night mode following system settings
-        // delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-
-        print("")
-//        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-//            setTheme(R.style.darkTheme)
-//        } else {
-//            setTheme(R.style.AppTheme)
-//        }
 
 
-    }
 
-
-    private fun saveFlagState(isLightMode: Boolean) {
+    private fun saveThemeChoice(choice: String) {
         val preferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
         val editor = preferences.edit()
-        editor.putBoolean("is_light_mode", isLightMode)
+        editor.putString("theme_choice", choice)
         editor.apply()
     }
 
-    private fun isLightMode(): Boolean {
+    private fun getThemeChoice(): String {
         val preferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
-        return preferences.getBoolean(
-            "is_light_mode",
-            true
-        )
+        return preferences.getString("theme_choice", "SYSTEM") ?: "SYSTEM"
     }
-
-
 
     private fun saveFlagLangState(isLang: String) {
         val sharedPreferences = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
@@ -201,13 +194,6 @@ class NewsActivity : AppCompatActivity() {
 
     }
 
-    fun restartApp(context: Context) {
-        val intent = context.packageManager
-            .getLaunchIntentForPackage(context.packageName)
-        val componentName = intent!!.component
-        val mainIntent = Intent.makeRestartActivityTask(componentName)
-        context.startActivity(mainIntent)
-        System.exit(0)  // This is used to kill the current instance of the app
-    }
+
 
 }
