@@ -104,7 +104,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(activity,getString( R.string.error) +"API_KEY Expired", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity,getString( R.string.error), Toast.LENGTH_LONG).show()
                         showErrorMessage(message)
                     }
                 }

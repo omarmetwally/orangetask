@@ -8,7 +8,7 @@
     <string name="noInternet">No Internet</string>
     <string name="connectionError">Connection Error</string>
     <string name="rerty">Retry</string>
-    <string name="error">An error occured: </string>
+    <string name="error">An error occured in Server </string>
 
 
 </resources>

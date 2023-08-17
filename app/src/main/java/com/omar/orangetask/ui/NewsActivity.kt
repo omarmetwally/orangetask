@@ -2,7 +2,6 @@ package com.omar.orangetask.ui
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,28 +19,16 @@ class NewsActivity : AppCompatActivity() {
 
     lateinit var viewModel: NewsViewModel
     var flagMode = true
-     var  flagLang="en"
+    var flagLang = "en"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
 
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
         //to get last User Settings for Language
-        flagLang=isLang()!!
-        if(flagLang=="en")
-        {
-            setLocale(this, "en",false)
-            floatinglang.setImageResource(R.drawable.toarabic)
-
-        }
-        else{
-            setLocale(this, "ar",false)
-            floatinglang.setImageResource(R.drawable.toenglish)
-
-        }
+        initializeLangUI()
 
         val newsRepository = NewsRepository(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
@@ -49,48 +36,18 @@ class NewsActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
 
 
-
-
         //to get last User Settings for Dark Mode
-        when (getThemeChoice()) {
-            "SYSTEM" ->{
-                // Check current system mode to decide which mode to set
-                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-                    saveThemeChoice("LIGHT")
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
-                    setTheme(R.style.AppTheme)
-                } else {
-                    saveThemeChoice("DARK")
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
-                    setTheme(R.style.darkTheme)
-                }
-            }
-            "LIGHT" -> {
-                saveThemeChoice("SYSTEM")
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
-                setTheme(R.style.AppTheme)
-            }
-            "DARK" -> {
-                saveThemeChoice("SYSTEM")
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
-                setTheme(R.style.darkTheme)
-            }
-        }
+        initializeThemeUI()
 
 
         //For language button(Floating)
         floatinglang.setOnClickListener {
-            if (flagLang=="en"){
+            if (flagLang == "en") {
                 floatinglang.setImageResource(R.drawable.toarabic)
                 saveFlagLangState("ar")
                 setLocale(this, "ar")
 
-            }
-            else{
+            } else {
                 floatinglang.setImageResource(R.drawable.toarabic)
                 saveFlagLangState("en")
                 setLocale(this, "en")
@@ -103,44 +60,79 @@ class NewsActivity : AppCompatActivity() {
         floatingthemeswitch.setOnClickListener {
             when (getThemeChoice()) {
                 "SYSTEM" -> {
-                    // Check current system mode to decide which mode to set
                     if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-                        saveThemeChoice("LIGHT")
+                        saveThemeChoice("USER_SET_LIGHT")
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
                         setTheme(R.style.AppTheme)
                     } else {
-                        saveThemeChoice("DARK")
+                        saveThemeChoice("USER_SET_DARK")
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
                         setTheme(R.style.darkTheme)
                     }
                 }
-                "LIGHT" -> {
-                    saveThemeChoice("SYSTEM")
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
-                    setTheme(R.style.AppTheme)
-                }
-                "DARK" -> {
-                    saveThemeChoice("SYSTEM")
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+                "USER_SET_LIGHT" -> {
+                    saveThemeChoice("USER_SET_DARK")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
                     setTheme(R.style.darkTheme)
+                }
+
+                "USER_SET_DARK" -> {
+                    saveThemeChoice("USER_SET_LIGHT")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
+                    setTheme(R.style.AppTheme)
                 }
             }
         }
 
 
-
-
-
-
     }
 
 
+    private fun initializeThemeUI() {
+        when (getThemeChoice()) {
+            "SYSTEM" -> {
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                    floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
+                    setTheme(R.style.darkTheme)
+                } else {
+                    floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
+                    setTheme(R.style.AppTheme)
+                }
+            }
+
+            "USER_SET_LIGHT" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                floatingthemeswitch.setImageResource(R.drawable.thumbtrue)
+                setTheme(R.style.AppTheme)
+            }
+
+            "USER_SET_DARK" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                floatingthemeswitch.setImageResource(R.drawable.thumbfalse)
+                setTheme(R.style.darkTheme)
+            }
+        }
+    }
 
 
+    private fun initializeLangUI() {
+        flagLang = isLang()!!
+        if (flagLang == "en") {
+            setLocale(this, "en", false)
+            floatinglang.setImageResource(R.drawable.toarabic)
+
+        } else {
+            setLocale(this, "ar", false)
+            floatinglang.setImageResource(R.drawable.toenglish)
+
+        }
+
+    }
 
     private fun saveThemeChoice(choice: String) {
         val preferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
@@ -163,17 +155,12 @@ class NewsActivity : AppCompatActivity() {
 
     private fun isLang(): String? {
         val sharedPreferences = getSharedPreferences("app_settings", MODE_PRIVATE)
-        var lang= sharedPreferences.getString("app_language", "en")
+        var lang = sharedPreferences.getString("app_language", "en")
         return lang
     }
 
 
-
-
-
-
-
-    fun setLocale(activity: Activity, languageCode: String,check:Boolean=true) {
+    fun setLocale(activity: Activity, languageCode: String, check: Boolean = true) {
 
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
@@ -183,17 +170,15 @@ class NewsActivity : AppCompatActivity() {
             config, activity.resources.displayMetrics
         )
 
-       if(check){
+        if (check) {
 
             finish()
             activity.startActivity(intent)
 
 
-
-       }
+        }
 
     }
-
 
 
 }

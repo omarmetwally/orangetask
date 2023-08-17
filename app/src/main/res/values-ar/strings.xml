@@ -9,6 +9,6 @@
     <string name="noInternet">لا يوجد شبكة اتصال</string>
     <string name="connectionError">مشكلة فى الشبكة</string>
     <string name="rerty">حاول مرةاخرى</string>
-    <string name="error">حدث خطأ: </string>
+    <string name="error">حدث خطأ فى الاتصال بالخادم </string>
 
 </resources>
